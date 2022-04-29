@@ -6,8 +6,8 @@ import FlatListMenuItem from '../components/FlasListMenuItem';
 import { MenuItem } from '../interfaces/appInterfaces';
 
 const menuItems: MenuItem[] = [
-  { name: 'Animation 101', icon: 'cube-outline', components: 'Animation101Screen' },
-  { name: 'Animation 102', icon: 'albums-outline', components: 'Animation102Screen' },
+  { name: 'Animation 101', icon: 'cube-outline', component: 'Animation101Screen' },
+  { name: 'Animation 102', icon: 'albums-outline', component: 'Animation102Screen' },
 ];
 
 const HomeScreen = () => {
