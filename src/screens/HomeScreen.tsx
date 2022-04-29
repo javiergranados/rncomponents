@@ -18,11 +18,13 @@ const menuItems = [
 const HomeScreen = () => {
   const { top } = useSafeAreaInsets();
 
-  const listHeader = (
-    <View style={{ marginTop: top + 20 }}>
+  const listHeader = () => (
+    <View style={{ marginTop: top + 20, marginBottom: 20 }}>
       <Text style={appStyles.title}>Opciones de menú</Text>
     </View>
   );
+
+  const itemSeparator = () => <View style={{ borderBottomWidth: 1, opacity: 0.4, marginVertical: 8 }} />;
 
   const renderItem = (menuItem: MenuItem) => (
     <View>
@@ -39,6 +41,7 @@ const HomeScreen = () => {
         renderItem={({ item }) => renderItem(item)}
         keyExtractor={(item) => item.name}
         ListHeaderComponent={listHeader}
+        ItemSeparatorComponent={itemSeparator}
       />
     </View>
   );
