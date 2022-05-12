@@ -1,39 +1,16 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import { Animated, Button, StyleSheet, View } from 'react-native';
+import { useAnimation } from '../hooks/useAnimation';
 
 export const Animation101Screen = () => {
-  const [visible, setVisible] = useState<boolean>(false);
-  const [disabled, setDisabled] = useState<boolean>(false);
-  const opacity = useRef(new Animated.Value(0)).current;
-
-  const fadeIn = () => {
-    Animated.timing(opacity, {
-      toValue: 1,
-      duration: 600,
-      useNativeDriver: true,
-    }).start(() => {
-      setDisabled(false);
-      setVisible(true);
-    });
-  };
-
-  const fadeOut = () => {
-    Animated.timing(opacity, {
-      toValue: 0,
-      duration: 600,
-      useNativeDriver: true,
-    }).start(() => {
-      setDisabled(false);
-      setVisible(false);
-    });
-  };
+  const { visible, disabled, opacity, position, fadeIn, fadeOut, startMovingPosition } = useAnimation();
 
   const handleClick = () => {
-    setDisabled(true);
     if (visible) {
       fadeOut();
     } else {
       fadeIn();
+      startMovingPosition(-300);
     }
   };
 
@@ -41,7 +18,7 @@ export const Animation101Screen = () => {
 
   return (
     <View style={styles.container}>
-      <Animated.View style={{ ...styles.box, marginBottom: 20, opacity: opacity }} />
+      <Animated.View style={{ ...styles.box, marginBottom: 20, opacity, transform: [{ translateY: position }] }} />
       <Button title={title} onPress={handleClick} disabled={disabled} />
     </View>
   );
