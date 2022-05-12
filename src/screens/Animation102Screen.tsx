@@ -1,48 +1,29 @@
-import React, { useRef, useState } from 'react';
-import { Animated, Button, StyleSheet, View } from 'react-native';
+import React, { useRef } from 'react';
+import { Animated, PanResponder, StyleSheet, View } from 'react-native';
 
 export const Animation102Screen = () => {
-  const [visible, setVisible] = useState<boolean>(false);
-  const [disabled, setDisabled] = useState<boolean>(false);
-  const opacity = useRef(new Animated.Value(0)).current;
+  const pan = useRef(new Animated.ValueXY()).current;
 
-  const fadeIn = () => {
-    Animated.timing(opacity, {
-      toValue: 1,
-      duration: 600,
-      useNativeDriver: true,
-    }).start(() => {
-      setDisabled(false);
-      setVisible(true);
-    });
-  };
-
-  const fadeOut = () => {
-    Animated.timing(opacity, {
-      toValue: 0,
-      duration: 600,
-      useNativeDriver: true,
-    }).start(() => {
-      setDisabled(false);
-      setVisible(false);
-    });
-  };
-
-  const handleClick = () => {
-    setDisabled(true);
-    if (visible) {
-      fadeOut();
-    } else {
-      fadeIn();
-    }
-  };
-
-  const title: string = disabled ? 'Animating...' : visible ? 'Fade Out' : 'Fade In';
+  const panResponder = PanResponder.create({
+    onStartShouldSetPanResponder: () => true,
+    onPanResponderMove: Animated.event(
+      [
+        null,
+        {
+          dx: pan.x,
+          dy: pan.y,
+        },
+      ],
+      { useNativeDriver: false },
+    ),
+    onPanResponderRelease: () => {
+      Animated.spring(pan, { toValue: { x: 0, y: 0 }, useNativeDriver: false }).start();
+    },
+  });
 
   return (
     <View style={styles.container}>
-      <Animated.View style={{ ...styles.box, marginBottom: 20, opacity: opacity }} />
-      <Button title={title} onPress={handleClick} disabled={disabled} />
+      <Animated.View {...panResponder.panHandlers} style={[pan.getLayout(), styles.box]} />
     </View>
   );
 };
@@ -54,7 +35,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   box: {
-    backgroundColor: 'red',
+    backgroundColor: '#75CEDB',
     width: 150,
     height: 150,
   },
