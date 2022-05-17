@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, Button, StyleSheet, View } from 'react-native';
+import { Alert, Button, Platform, StyleSheet, View } from 'react-native';
 import HeaderTitle from '../components/HeaderTitle';
 
 export const AlertScreen = () => {
@@ -19,10 +19,22 @@ export const AlertScreen = () => {
     );
   };
 
+  const showPrompt = () => {
+    Alert.prompt(
+      'Are you sure?',
+      "This can't be reverted",
+      (response) => console.log('response: ', response),
+      'secure-text',
+      '',
+      'number-pad',
+    );
+  };
+
   return (
     <View style={styles.container}>
       <HeaderTitle title="Alerts" />
       <Button title="Show Alert" onPress={showAlert} />
+      {Platform.OS === 'ios' && <Button title="Show Prompt" onPress={showPrompt} />}
     </View>
   );
 };
