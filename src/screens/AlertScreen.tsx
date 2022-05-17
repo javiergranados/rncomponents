@@ -1,5 +1,6 @@
 import React from 'react';
 import { Alert, Button, Platform, StyleSheet, View } from 'react-native';
+import prompt from 'react-native-prompt-android';
 import HeaderTitle from '../components/HeaderTitle';
 
 export const AlertScreen = () => {
@@ -19,7 +20,7 @@ export const AlertScreen = () => {
     );
   };
 
-  const showPrompt = () => {
+  const showIOSPrompt = () => {
     Alert.prompt(
       'Are you sure?',
       "This can't be reverted",
@@ -30,11 +31,34 @@ export const AlertScreen = () => {
     );
   };
 
+  const showExternalPrompt = () => {
+    prompt(
+      'Are you sure?',
+      "This can't be reverted",
+      [
+        { text: 'Cancel', style: 'cancel', onPress: () => console.log('Cancel Pressed') },
+        { text: 'OK', onPress: (response) => console.log('response: ', response) },
+      ],
+      {
+        type: 'secure-text',
+        cancelable: false,
+        placeholder: 'placeholder',
+      },
+    );
+  };
+
   return (
     <View style={styles.container}>
       <HeaderTitle title="Alerts" />
       <Button title="Show Alert" onPress={showAlert} />
-      {Platform.OS === 'ios' && <Button title="Show Prompt" onPress={showPrompt} />}
+      {Platform.OS === 'ios' && (
+        <>
+          <View style={{ height: 10 }} />
+          <Button title="Show iOS Prompt" onPress={showIOSPrompt} />
+        </>
+      )}
+      <View style={{ height: 10 }} />
+      <Button title="Show External Prompt" onPress={showExternalPrompt} />
     </View>
   );
 };
