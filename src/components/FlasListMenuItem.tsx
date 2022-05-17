@@ -22,9 +22,9 @@ const FlatListMenuItem = ({ menuItem }: Props) => {
       onPress={() => navigation.navigate(menuItem.component as keyof RootStackParamList)}
     >
       <View style={styles.container}>
-        <Icon name={menuItem.icon} color="gray" size={23} />
+        <Icon name={menuItem.icon} color="#5856D6" size={23} />
         <Text style={styles.itemText}>{menuItem.name}</Text>
-        <Icon name="chevron-forward-outline" color="gray" size={23} style={styles.arrowIcon} />
+        <Icon name="chevron-forward-outline" color="#5856D6" size={23} style={styles.arrowIcon} />
       </View>
     </TouchableOpacity>
   );
