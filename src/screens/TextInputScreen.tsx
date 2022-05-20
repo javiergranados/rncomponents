@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -10,20 +10,17 @@ import {
   View,
   TouchableWithoutFeedback,
 } from 'react-native';
+import CustomSwitch from '../components/CustomSwitch';
 import HeaderTitle from '../components/HeaderTitle';
+import { useForm } from '../hooks/useForm';
 
 export const TextInputScreen = () => {
-  const [form, setForm] = useState({
+  const { form, isSubscribed, onChange } = useForm({
     name: '',
     email: '',
     phone: '',
+    isSubscribed: false,
   });
-
-  const onChange = (value: string, field: string) =>
-    setForm({
-      ...form,
-      [field]: value,
-    });
 
   return (
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -46,8 +43,6 @@ export const TextInputScreen = () => {
               onChangeText={(value: string) => onChange(value, 'email')}
               keyboardType="email-address"
             />
-            <Text style={styles.formContainer}>{JSON.stringify(form, null, 5)}</Text>
-            <Text style={styles.formContainer}>{JSON.stringify(form, null, 5)}</Text>
             <TextInput
               style={styles.textInput}
               placeholder="Teléfono"
@@ -55,6 +50,10 @@ export const TextInputScreen = () => {
               keyboardType="phone-pad"
               keyboardAppearance="dark"
             />
+            <View style={styles.switchRow}>
+              <Text style={styles.switchText}>isSubscribed</Text>
+              <CustomSwitch initialValue={isSubscribed} onChange={(value) => onChange(value, 'isSubscribed')} />
+            </View>
             <Text style={styles.formContainer}>{JSON.stringify(form, null, 5)}</Text>
             <View style={{ height: 100 }} />
           </View>
@@ -79,5 +78,14 @@ const styles = StyleSheet.create({
   formContainer: {
     fontSize: 25,
     marginTop: 20,
+  },
+  switchRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  switchText: {
+    fontSize: 25,
   },
 });
