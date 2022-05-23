@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, FlatList, Image, StyleSheet, Text, View } from 'react-native';
 import HeaderTitle from '../components/HeaderTitle';
 
 const INCREMENT_INTERVAL = 5;
@@ -15,11 +15,15 @@ export const InfiniteScrollScreen = () => {
       incrementedArray.push(i + 1 + lastNumber);
     });
 
-    setNumbers(incrementedArray);
+    setTimeout(() => {
+      setNumbers(incrementedArray);
+    }, 1500);
   };
 
   const renderItem = (item: number) => {
-    return <Text style={styles.textItem}>{item}</Text>;
+    return (
+      <Image source={{ uri: `https://picsum.photos/id/${item}/500/400` }} style={{ width: '100%', height: 400 }} />
+    );
   };
 
   return (
@@ -31,6 +35,11 @@ export const InfiniteScrollScreen = () => {
         ListHeaderComponent={() => <HeaderTitle title="Infinite scroll" />}
         onEndReached={loadMore}
         onEndReachedThreshold={0.5}
+        ListFooterComponent={
+          <View style={styles.footer}>
+            <ActivityIndicator size={25} color="#5856D6" />
+          </View>
+        }
       />
     </View>
   );
@@ -42,5 +51,11 @@ const styles = StyleSheet.create({
   },
   textItem: {
     height: 150,
+  },
+  footer: {
+    width: '100%',
+    height: 150,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
