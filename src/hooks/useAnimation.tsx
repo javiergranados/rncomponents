@@ -8,12 +8,12 @@ export const useAnimation = () => {
   const opacity = useRef(new Animated.Value(0)).current;
   const position = useRef(new Animated.Value(0)).current;
 
-  const fadeIn = () => {
+  const fadeIn = (duration: number = 600) => {
     setDisabled(true);
 
     Animated.timing(opacity, {
       toValue: 1,
-      duration: 600,
+      duration,
       useNativeDriver: true,
     }).start(() => {
       setDisabled(false);
