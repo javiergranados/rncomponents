@@ -1,17 +1,27 @@
 import React, { useState } from 'react';
-import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
+import { Animated, Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../navigators/StackNavigator';
 import { slides, Slide } from '../data/slides';
+import { useAnimation } from '../hooks/useAnimation';
 
 const { width: screenWidth } = Dimensions.get('window');
 
-interface RenderItemProps {
+type RenderItemProps = {
   item: Slide;
-}
+};
+
+type SlidesScreenProps = StackNavigationProp<RootStackParamList, 'SlidesScreen'>;
 
 export const SlidesScreen = () => {
+  const { opacity, fadeIn } = useAnimation();
+  const navigation = useNavigation<SlidesScreenProps>();
   const [activeSlide, setActiveSlide] = useState<number>(0);
+  const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
 
   const renderItem = ({ item }: RenderItemProps) => {
     return (
@@ -23,7 +33,17 @@ export const SlidesScreen = () => {
     );
   };
 
-  const handleSnapToItem = (activeSlideIndex: number) => setActiveSlide(activeSlideIndex);
+  const handleSnapToItem = (activeSlideIndex: number) => {
+    setActiveSlide(activeSlideIndex);
+    if (activeSlideIndex === slides.length - 1) {
+      setIsButtonDisabled(false);
+      fadeIn(250);
+    }
+  };
+
+  const handleOnPress = () => {
+    navigation.popToTop();
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -35,16 +55,29 @@ export const SlidesScreen = () => {
         layout="default"
         onSnapToItem={handleSnapToItem}
       />
-      <Pagination
-        dotsLength={slides.length}
-        activeDotIndex={activeSlide}
-        dotStyle={{
-          width: 10,
-          height: 10,
-          borderRadius: 10,
-          backgroundColor: '#5056D6',
-        }}
-      />
+      <View style={styles.paginationContainer}>
+        <Pagination
+          dotsLength={slides.length}
+          activeDotIndex={activeSlide}
+          dotStyle={{
+            width: 10,
+            height: 10,
+            borderRadius: 10,
+            backgroundColor: '#5056D6',
+          }}
+        />
+        <Animated.View style={{ opacity }}>
+          <TouchableOpacity
+            style={styles.buttonContainer}
+            activeOpacity={0.9}
+            onPress={handleOnPress}
+            disabled={isButtonDisabled}
+          >
+            <Text style={styles.buttonText}>Enter</Text>
+            <Icon name="chevron-forward-outline" color="white" size={30} />
+          </TouchableOpacity>
+        </Animated.View>
+      </View>
     </SafeAreaView>
   );
 };
@@ -72,5 +105,24 @@ const styles = StyleSheet.create({
   },
   slideSubtitle: {
     fontSize: 16,
+  },
+  paginationContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginHorizontal: 20,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    backgroundColor: '#5056D6',
+    width: 140,
+    height: 50,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonText: {
+    fontSize: 20,
+    color: 'white',
   },
 });
