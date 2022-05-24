@@ -41,7 +41,6 @@ const styles = StyleSheet.create({
   },
   slide: {
     flex: 1,
-    backgroundColor: 'white',
     borderRadius: 5,
     padding: 40,
     justifyContent: 'center',

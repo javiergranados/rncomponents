@@ -33,6 +33,9 @@ const StackNavigator = () => {
     <RootStack.Navigator
       screenOptions={{
         headerShown: false,
+        cardStyle: {
+          backgroundColor: 'white',
+        },
       }}
     >
       <RootStack.Screen name="HomeScreen" component={HomeScreen} />
