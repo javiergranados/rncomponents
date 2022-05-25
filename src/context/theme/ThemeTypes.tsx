@@ -21,25 +21,25 @@ export const LIGHT_THEME: Theme = {
   dark: false,
   dividerColor: 'rgba(0,0,0,0.4)',
   colors: {
-    primary: 'red', //TODO:
-    background: 'blue', //TODO:
-    card: 'green', //TODO:
-    text: 'pink', //TODO:
-    border: 'orange', //TODO:
-    notification: 'teal', //TODO:
+    primary: '#5856D6',
+    background: 'white',
+    card: 'green',
+    text: 'black',
+    border: 'black',
+    notification: 'teal',
   },
 };
 
 export const DARK_THEME: Theme = {
   currentTheme: 'dark',
   dark: true,
-  dividerColor: 'rgba(0,0,0,0.4)',
+  dividerColor: 'rgba(255,255,255, 0.6)',
   colors: {
-    primary: 'red', //TODO:
-    background: 'blue', //TODO:
-    card: 'green', //TODO:
-    text: 'pink', //TODO:
-    border: 'orange', //TODO:
-    notification: 'teal', //TODO:
+    primary: '#00A5E0',
+    background: 'black',
+    card: 'black',
+    text: 'white',
+    border: 'black',
+    notification: 'teal',
   },
 };
