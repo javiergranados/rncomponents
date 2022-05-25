@@ -1,13 +1,17 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
 import StackNavigator from './src/navigators/StackNavigator';
+import { ThemeProvider } from './src/context';
 
 const App = () => {
   return (
-    <NavigationContainer>
+    <AppState>
       <StackNavigator />
-    </NavigationContainer>
+    </AppState>
   );
+};
+
+const AppState = ({ children }: any) => {
+  return <ThemeProvider>{children}</ThemeProvider>;
 };
 
 export default App;
