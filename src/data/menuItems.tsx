@@ -11,4 +11,5 @@ export const menuItems: MenuItem[] = [
   { name: 'Modal', icon: 'copy-outline', component: 'ModalScreen' },
   { name: 'Infinite scroll', icon: 'download-outline', component: 'InfiniteScrollScreen' },
   { name: 'Slides', icon: 'play-outline', component: 'SlidesScreen' },
+  { name: 'Themes', icon: 'flask-outline', component: 'ThemesScreen' },
 ];
