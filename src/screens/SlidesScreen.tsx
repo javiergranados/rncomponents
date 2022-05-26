@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Animated, Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -8,6 +8,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../navigators/StackNavigator';
 import { slides, Slide } from '../data/slides';
 import { useAnimation } from '../hooks/useAnimation';
+import { ThemeContext } from '../context';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -18,6 +19,10 @@ type RenderItemProps = {
 type SlidesScreenProps = StackNavigationProp<RootStackParamList, 'SlidesScreen'>;
 
 export const SlidesScreen = () => {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext);
+
   const { opacity, fadeIn } = useAnimation();
   const navigation = useNavigation<SlidesScreenProps>();
   const [activeSlide, setActiveSlide] = useState<number>(0);
@@ -27,8 +32,8 @@ export const SlidesScreen = () => {
     return (
       <View style={styles.slide}>
         <Image style={styles.slideImage} source={item.img} />
-        <Text style={styles.slideTitle}>{item.title}</Text>
-        <Text style={styles.slideSubtitle}>{item.desc}</Text>
+        <Text style={{ ...styles.slideTitle, color: colors.primary }}>{item.title}</Text>
+        <Text style={{ ...styles.slideSubtitle, color: colors.text }}>{item.desc}</Text>
       </View>
     );
   };
@@ -63,12 +68,12 @@ export const SlidesScreen = () => {
             width: 10,
             height: 10,
             borderRadius: 10,
-            backgroundColor: '#5056D6',
+            backgroundColor: colors.primary,
           }}
         />
         <Animated.View style={{ opacity }}>
           <TouchableOpacity
-            style={styles.buttonContainer}
+            style={{ ...styles.buttonContainer, backgroundColor: colors.primary }}
             activeOpacity={0.9}
             onPress={handleOnPress}
             disabled={isButtonDisabled}
@@ -101,7 +106,6 @@ const styles = StyleSheet.create({
   slideTitle: {
     fontSize: 30,
     fontWeight: 'bold',
-    color: '#5856D6',
   },
   slideSubtitle: {
     fontSize: 16,
@@ -114,7 +118,6 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
-    backgroundColor: '#5056D6',
     width: 140,
     height: 50,
     borderRadius: 10,

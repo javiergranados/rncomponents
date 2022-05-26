@@ -16,7 +16,7 @@ export const ThemesScreen = () => {
       activeOpacity={0.8}
       onPress={setLightTheme}
     >
-      <Text style={styles.text}>Light</Text>
+      <Text style={{ ...styles.text, color: colors.text }}>Light</Text>
     </TouchableOpacity>
   );
 
@@ -26,7 +26,7 @@ export const ThemesScreen = () => {
       activeOpacity={0.8}
       onPress={setDarkTheme}
     >
-      <Text style={styles.text}>Dark</Text>
+      <Text style={{ ...styles.text, color: colors.text }}>Dark</Text>
     </TouchableOpacity>
   );
 
@@ -56,7 +56,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   text: {
-    color: 'white',
     fontSize: 22,
     textAlign: 'center',
   },

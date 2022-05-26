@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -12,9 +12,14 @@ import {
 } from 'react-native';
 import CustomSwitch from '../components/CustomSwitch';
 import HeaderTitle from '../components/HeaderTitle';
+import { ThemeContext } from '../context';
 import { useForm } from '../hooks/useForm';
 
 export const TextInputScreen = () => {
+  const {
+    theme: { dark, colors, dividerColor },
+  } = useContext(ThemeContext);
+
   const { form, isSubscribed, onChange } = useForm({
     name: '',
     email: '',
@@ -29,26 +34,31 @@ export const TextInputScreen = () => {
           <View style={styles.container}>
             <HeaderTitle title="TextInputs" />
             <TextInput
-              style={styles.textInput}
+              style={{ ...styles.textInput, borderColor: colors.text, color: colors.text }}
               placeholder="Nombre"
+              placeholderTextColor={dividerColor}
               autoCorrect={false}
               autoCapitalize="words"
               onChangeText={(value: string) => onChange(value, 'name')}
+              keyboardAppearance={dark ? 'dark' : 'light'}
             />
             <TextInput
-              style={styles.textInput}
+              style={{ ...styles.textInput, borderColor: colors.text, color: colors.text }}
               placeholder="Email"
+              placeholderTextColor={dividerColor}
               autoCorrect={false}
               autoCapitalize="none"
               onChangeText={(value: string) => onChange(value, 'email')}
               keyboardType="email-address"
+              keyboardAppearance={dark ? 'dark' : 'light'}
             />
             <TextInput
-              style={styles.textInput}
+              style={{ ...styles.textInput, borderColor: colors.text, color: colors.text }}
               placeholder="Teléfono"
+              placeholderTextColor={dividerColor}
               onChangeText={(value: string) => onChange(value, 'phone')}
               keyboardType="phone-pad"
-              keyboardAppearance="dark"
+              keyboardAppearance={dark ? 'dark' : 'light'}
             />
             <View style={styles.switchRow}>
               <Text style={styles.switchText}>isSubscribed</Text>

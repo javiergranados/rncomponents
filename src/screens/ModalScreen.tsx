@@ -1,20 +1,25 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Button, Modal, StyleSheet, Text, View } from 'react-native';
 import HeaderTitle from '../components/HeaderTitle';
+import { ThemeContext } from '../context';
 
 export const ModalScreen = () => {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext);
+
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
   return (
     <View style={styles.container}>
       <HeaderTitle title="Modals" />
-      <Button title="Open" onPress={() => setIsVisible(true)} />
+      <Button title="Open" onPress={() => setIsVisible(true)} color={colors.primary} />
       <Modal animationType="fade" visible={isVisible} transparent>
         <View style={styles.modalBackground}>
           <View style={styles.modalContainer}>
             <Text style={styles.modalTitle}>Modal</Text>
             <Text style={styles.modalBody}>Modal body</Text>
-            <Button title="Close" onPress={() => setIsVisible(false)} />
+            <Button title="Close" onPress={() => setIsVisible(false)} color={colors.primary} />
           </View>
         </View>
       </Modal>

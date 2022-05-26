@@ -19,7 +19,7 @@ export type ThemeActions = { type: 'SET_LIGHT_THEME'; payload: Theme } | { type:
 export const LIGHT_THEME: Theme = {
   currentTheme: 'light',
   dark: false,
-  dividerColor: 'rgba(0,0,0,0.4)',
+  dividerColor: 'rgba(0,0,0,0.6)',
   colors: {
     primary: '#5856D6',
     background: 'white',

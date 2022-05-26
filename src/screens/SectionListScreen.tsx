@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { SectionList, StyleSheet, Text, View } from 'react-native';
 import HeaderTitle from '../components/HeaderTitle';
 import ItemSeparator from '../components/ItemSeparator';
+import { ThemeContext } from '../context';
 import { superHeros } from '../data/superHeros';
 
 export const SectionListScreen = () => {
+  const {
+    theme: { colors },
+  } = useContext(ThemeContext);
+
   return (
     <View style={{ ...styles.container, flex: 1 }}>
       <SectionList
@@ -18,9 +23,9 @@ export const SectionListScreen = () => {
         )}
         stickySectionHeadersEnabled
         showsVerticalScrollIndicator={false}
-        renderItem={({ item }) => <Text>{item}</Text>}
+        renderItem={({ item }) => <Text style={{ color: colors.text }}>{item}</Text>}
         renderSectionHeader={({ section }) => (
-          <View style={{ backgroundColor: 'white' }}>
+          <View style={{ backgroundColor: colors.background }}>
             <HeaderTitle title={section.title} />
           </View>
         )}
